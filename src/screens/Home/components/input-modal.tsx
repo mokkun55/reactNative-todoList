@@ -8,8 +8,10 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+import { useAsyncStorage } from "@/screens/Home/hooks/use-async-storage";
 import { type TodoType } from "@/types/todo-type";
 
 type Props = {
@@ -27,6 +29,7 @@ export const InputModal = ({
 }: Props): ReactNode => {
   const [text, onChangeText] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
+  const { addTodo } = useAsyncStorage();
 
   // 年月日変更時に呼ばれる
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,14 +45,27 @@ export const InputModal = ({
     setDate(currentDate);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (!text) return;
 
-    // TODO 保存処理
     setTodos([
       ...todos,
       { id: String(todos.length + 1), title: text, date, done: false },
     ]);
+
+    try {
+      void addTodo({
+        id: String(todos.length + 1),
+        title: text,
+        date,
+        done: false,
+      });
+      const item = await AsyncStorage.getItem("todos");
+      console.log("item", item);
+    } catch (e) {
+      console.error("追加エラー:", e);
+    }
+
     onChangeText("");
     onClose();
   };
