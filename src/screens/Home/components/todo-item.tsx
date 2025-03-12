@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 
 import { type TodoType } from "@/types/todo-type";
 import { useAsyncStorage } from "../hooks/use-async-storage";
+import { TodoSettingModal } from "./todo-setting-modal";
 
 type Props = {
   todoItem: TodoType;
@@ -15,9 +16,14 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
   const [isTomorrow, setIsTomorrow] = useState<boolean>(false);
   const [isBefore, setIsBefore] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(todoItem.done);
+  const [isSetting, setIsSetting] = useState<boolean>(false);
   const { toggleTodo } = useAsyncStorage();
 
   const todoDate = dayjs(todoItem.date);
+
+  const handleLongPress = () => {
+    setIsSetting(true);
+  };
 
   useEffect(() => {
     const today = dayjs();
@@ -39,11 +45,14 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
         text={todoItem.title}
         textStyle={styles.item}
         isChecked={isChecked}
-        onPress={(isChecked) => {
-          setIsChecked(isChecked);
+        onPress={() => {
+          setIsChecked(!isChecked);
           void toggleTodo(todoItem.id);
         }}
+        onLongPress={handleLongPress}
+        useBuiltInState={false}
       />
+
       <View style={styles.footerItems}>
         <View style={styles.dates}>
           <Text
@@ -60,6 +69,8 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
             {(isToday || isTomorrow) && todoDate.format("HH:mm")}
           </Text>
         </View>
+
+        <TodoSettingModal isVisible={isSetting} />
       </View>
     </>
   );
