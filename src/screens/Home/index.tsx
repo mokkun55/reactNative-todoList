@@ -15,7 +15,6 @@ export const HomeScreen = () => {
   const fetchTodos = async () => {
     const todos = await getTodos();
     setTodos(todos);
-    console.log("todos", todos);
   };
   // 初回読み込み
   useEffect(() => {

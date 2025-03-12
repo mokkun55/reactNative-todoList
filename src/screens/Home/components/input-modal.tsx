@@ -60,8 +60,7 @@ export const InputModal = ({
         date,
         done: false,
       });
-      const item = await AsyncStorage.getItem("todos");
-      console.log("item", item);
+      await AsyncStorage.getItem("todos");
     } catch (e) {
       console.error("追加エラー:", e);
     }
