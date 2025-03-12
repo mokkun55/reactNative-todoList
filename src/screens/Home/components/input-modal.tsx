@@ -33,6 +33,15 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
     setDate(currentDate);
   };
 
+  const onSubmit = () => {
+    if (!text) return;
+
+    // TODO 保存処理
+    console.log(text, date);
+    onChangeText("");
+    onClose();
+  };
+
   return (
     <Modal animationType="none" transparent={true} visible={isVisible}>
       <TouchableWithoutFeedback onPress={onClose}>
@@ -45,7 +54,9 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
           onChangeText={onChangeText}
           value={text}
           placeholder="例: トマトを買う"
+          placeholderTextColor="#555"
           autoFocus
+          onSubmitEditing={onSubmit}
         />
         <View style={styles.buttonContainer}>
           <View style={styles.datePickerContainer}>
@@ -78,6 +89,7 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
               backgroundColor: "#DD4B3F",
               borderRadius: 50,
             }}
+            onPress={onSubmit}
           />
         </View>
       </KeyboardAvoidingView>
@@ -97,6 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   input: {
+    fontSize: 18,
     height: 40,
     margin: 12,
     padding: 0,
