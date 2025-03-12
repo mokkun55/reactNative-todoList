@@ -80,6 +80,7 @@ export const InputModal = ({
               display="default"
               onChange={onDateChange}
               locale="ja-JP"
+              style={{ marginLeft: -20 }}
             />
             <DateTimePicker
               value={date}
