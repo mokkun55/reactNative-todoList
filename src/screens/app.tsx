@@ -2,9 +2,13 @@ import React from "react";
 import { registerRootComponent } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import dayjs from "dayjs";
+
+import "dayjs/locale/ja";
 
 import { HomeScreen } from "@/screens/Home";
 
+dayjs.locale("ja");
 const Stack = createStackNavigator();
 
 const App = () => {
