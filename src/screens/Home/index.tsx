@@ -8,40 +8,26 @@ import { TodoItem } from "./components/todo-item";
 
 export const HomeScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  // TODO 仮置き
-  const todos: TodoType[] = [
-    {
-      id: "1",
-      title: "買い物",
-      date: new Date(2025, 2, 12, 11, 0),
-      done: false,
-    },
-    {
-      id: "2",
-      title: "掃除",
-      date: new Date(2025, 2, 13, 11, 0),
-      done: true,
-    },
-    {
-      id: "3",
-      title: "勉強",
-      date: new Date(2025, 2, 14, 11, 0),
-      done: false,
-    },
-    {
-      id: "4",
-      title: "卒研",
-      date: new Date(2025, 2, 11, 11, 0),
-      done: false,
-    },
-  ];
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>ToDo List</Text>
 
       {/* todo一覧 */}
+      {todos.length === 0 && (
+        <Text
+          style={{
+            fontSize: 16,
+            color: "#555",
+            textAlign: "center",
+            marginTop: 24,
+          }}
+        >
+          まだタスクがありません。{"\n"}
+          いますぐタスクを追加しましょう!!
+        </Text>
+      )}
       <FlatList
         data={todos}
         renderItem={({ item }) => (
@@ -55,6 +41,8 @@ export const HomeScreen = () => {
       {/* 入力欄モーダル*/}
       {isModalVisible && (
         <InputModal
+          todos={todos}
+          setTodos={setTodos}
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
         />

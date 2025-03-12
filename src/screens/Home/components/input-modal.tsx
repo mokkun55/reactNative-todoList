@@ -10,12 +10,21 @@ import {
 import Icon from "react-native-vector-icons/AntDesign";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+import { type TodoType } from "@/types/todo-type";
+
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  todos: TodoType[];
+  setTodos: (todo: TodoType[]) => void;
 };
 
-export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
+export const InputModal = ({
+  isVisible,
+  onClose,
+  todos,
+  setTodos,
+}: Props): ReactNode => {
   const [text, onChangeText] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
 
@@ -37,7 +46,10 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
     if (!text) return;
 
     // TODO 保存処理
-    console.log(text, date);
+    setTodos([
+      ...todos,
+      { id: String(todos.length + 1), title: text, date, done: false },
+    ]);
     onChangeText("");
     onClose();
   };
