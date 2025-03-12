@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 type Props = {
   isVisible: boolean;
@@ -15,6 +16,21 @@ type Props = {
 
 export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
   const [text, onChangeText] = useState<string>("");
+  const [date, setDate] = useState<Date>(new Date());
+
+  // 年月日変更時に呼ばれる
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onDateChange = (event: any, selectedDate: Date | undefined) => {
+    const currentDate = selectedDate ?? date;
+    setDate(currentDate);
+  };
+
+  // 時分変更時に呼ばれる
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onTimeChange = (event: any, selectedDate: Date | undefined) => {
+    const currentDate = selectedDate ?? date;
+    setDate(currentDate);
+  };
 
   return (
     <Modal animationType="none" transparent={true} visible={isVisible}>
@@ -30,6 +46,23 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
           placeholder="例: トマトを買う"
           autoFocus
         />
+        <View style={styles.datePickerContainer}>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onDateChange}
+            locale="ja-JP"
+          />
+          <DateTimePicker
+            value={date}
+            mode="time"
+            is24Hour={true}
+            display="default"
+            onChange={onTimeChange}
+            locale="ja-JP"
+          />
+        </View>
       </KeyboardAvoidingView>
     </Modal>
   );
@@ -50,5 +83,9 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     padding: 0,
+  },
+  datePickerContainer: {
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
