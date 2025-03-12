@@ -14,21 +14,18 @@ export const HomeScreen = () => {
     {
       id: "1",
       title: "買い物",
-      time: "10:00",
       date: new Date(2025, 2, 12, 11, 0),
       done: false,
     },
     {
       id: "2",
       title: "掃除",
-      time: "12:00",
       date: new Date(2025, 2, 13, 11, 0),
       done: true,
     },
     {
       id: "3",
       title: "勉強",
-      time: "14:00",
       date: new Date(2025, 2, 14, 11, 0),
       done: false,
     },

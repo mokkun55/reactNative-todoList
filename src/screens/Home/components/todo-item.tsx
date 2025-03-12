@@ -50,7 +50,7 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
             {isToday ? "今日" : isTomorrow ? "明日" : todoDate.format("M/DD")}
           </Text>
           <Text style={styles.time}>
-            {(isToday || isTomorrow) && todoItem.time}
+            {(isToday || isTomorrow) && todoDate.format("HH:mm")}
           </Text>
         </View>
       </View>
