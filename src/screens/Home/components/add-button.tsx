@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     backgroundColor: "#DD4B3F",
-    padding: 12,
+    padding: 20,
     borderRadius: 50,
   },
 });

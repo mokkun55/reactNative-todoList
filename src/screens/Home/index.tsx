@@ -43,13 +43,14 @@ export const HomeScreen = () => {
         keyExtractor={(item) => item.id}
       />
 
-      {/* 入力欄 */}
+      {/* 入力欄モーダル*/}
       {isModalVisible && (
         <InputModal
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
         />
       )}
+
       {/* 追加ボタン */}
       <AddButton onPress={() => setIsModalVisible(true)} />
     </View>
