@@ -10,25 +10,24 @@ type Props = {
 };
 
 export const TodoItem = ({ todoItem }: Props): ReactNode => {
-  const [isToday, setIsToday] = useState(false);
-  const [isTomorrow, setIsTomorrow] = useState(false);
-  const formattedDate = dayjs(todoItem.date).format("M/DD");
+  const [isToday, setIsToday] = useState<boolean>(false);
+  const [isTomorrow, setIsTomorrow] = useState<boolean>(false);
+  const [isBefore, setIsBefore] = useState<boolean>(false);
+
+  const todoDate = dayjs(todoItem.date);
 
   useEffect(() => {
-    const today = dayjs().format("M/DD");
-    const tomorrow = dayjs().add(1, "day").format("M/DD");
+    const today = dayjs();
+    const tomorrow = dayjs().add(1, "day");
 
-    if (formattedDate === today) {
+    if (todoDate.isSame(today, "day")) {
       setIsToday(true);
-      setIsTomorrow(false);
-    } else if (formattedDate === tomorrow) {
+    } else if (todoDate.isSame(tomorrow, "day")) {
       setIsTomorrow(true);
-      setIsToday(false);
-    } else {
-      setIsToday(false);
-      setIsTomorrow(false);
+    } else if (todoDate.isBefore(tomorrow, "day")) {
+      setIsBefore(true);
     }
-  }, [formattedDate]);
+  }, [todoDate]);
 
   return (
     <>
@@ -43,15 +42,17 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
           <Text
             style={[
               styles.day,
-              isToday && { color: "#FFA500" },
-              isTomorrow && { color: "#499C20" },
+              isToday && { color: "#FFA500" }, // 今日 → オレンジ
+              isTomorrow && { color: "#499C20" }, // 明日 → 緑
+              isBefore && { color: "#DD4B3F" }, // それ以降 → 赤
             ]}
           >
-            {isToday ? "今日" : isTomorrow ? "明日" : formattedDate}
+            {isToday ? "今日" : isTomorrow ? "明日" : todoDate.format("M/DD")}
           </Text>
-          <Text style={styles.time}>{isToday && todoItem.time}</Text>
+          <Text style={styles.time}>
+            {(isToday || isTomorrow) && todoItem.time}
+          </Text>
         </View>
-        <Text style={styles.tag}>#タグ</Text>
       </View>
     </>
   );
@@ -63,7 +64,6 @@ const styles = StyleSheet.create({
   },
   footerItems: {
     flexDirection: "row",
-    justifyContent: "space-between",
     marginLeft: 40,
   },
   dates: {
@@ -74,9 +74,6 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   day: {
-    color: "#333",
-  },
-  tag: {
     color: "#333",
   },
 });
