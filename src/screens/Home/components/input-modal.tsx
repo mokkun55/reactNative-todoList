@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 type Props = {
@@ -46,21 +47,37 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
           placeholder="例: トマトを買う"
           autoFocus
         />
-        <View style={styles.datePickerContainer}>
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="default"
-            onChange={onDateChange}
-            locale="ja-JP"
-          />
-          <DateTimePicker
-            value={date}
-            mode="time"
-            is24Hour={true}
-            display="default"
-            onChange={onTimeChange}
-            locale="ja-JP"
+        <View style={styles.buttonContainer}>
+          <View style={styles.datePickerContainer}>
+            {/* MEMO androidは別で書かないといけないらしい https://note.com/npaka/n/n093a9a657962 */}
+            <DateTimePicker
+              value={date}
+              mode="date"
+              themeVariant="light"
+              display="default"
+              onChange={onDateChange}
+              locale="ja-JP"
+            />
+            <DateTimePicker
+              value={date}
+              minuteInterval={10}
+              mode="time"
+              themeVariant="light"
+              is24Hour={true}
+              display="default"
+              onChange={onTimeChange}
+              locale="ja-JP"
+            />
+          </View>
+          <Icon
+            name="arrowup"
+            size={24}
+            color="#fff"
+            style={{
+              padding: 10,
+              backgroundColor: "#DD4B3F",
+              borderRadius: 50,
+            }}
           />
         </View>
       </KeyboardAvoidingView>
@@ -83,6 +100,12 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     padding: 0,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: 10,
   },
   datePickerContainer: {
     alignItems: "center",
