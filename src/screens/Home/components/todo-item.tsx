@@ -4,6 +4,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import dayjs from "dayjs";
 
 import { type TodoType } from "@/types/todo-type";
+import { useAsyncStorage } from "../hooks/use-async-storage";
 
 type Props = {
   todoItem: TodoType;
@@ -13,6 +14,8 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
   const [isToday, setIsToday] = useState<boolean>(false);
   const [isTomorrow, setIsTomorrow] = useState<boolean>(false);
   const [isBefore, setIsBefore] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(todoItem.done);
+  const { toggleTodo } = useAsyncStorage();
 
   const todoDate = dayjs(todoItem.date);
 
@@ -35,7 +38,11 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
         size={24}
         text={todoItem.title}
         textStyle={styles.item}
-        isChecked={todoItem.done}
+        isChecked={isChecked}
+        onPress={(isChecked) => {
+          setIsChecked(isChecked);
+          void toggleTodo(todoItem.id);
+        }}
       />
       <View style={styles.footerItems}>
         <View style={styles.dates}>

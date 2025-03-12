@@ -66,10 +66,31 @@ export const useAsyncStorage = () => {
     }
   };
 
+  // チェックボックスの状態を変更
+  const toggleTodo = async (id: string): Promise<void> => {
+    try {
+      // 保存されているTODOリストを取得
+      const jsonValue = await AsyncStorage.getItem("todos");
+      if (!jsonValue) return;
+      const todos = JSON.parse(jsonValue) as TodoType[];
+
+      // チェックボックスの状態を変更
+      const newTodos = todos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo,
+      );
+
+      // リストを保存
+      await saveTodos(newTodos);
+    } catch (error) {
+      console.error("チェックエラー:", error);
+    }
+  };
+
   return {
     getTodos,
     saveTodos,
     addTodo,
     deleteTodo,
+    toggleTodo,
   };
 };
