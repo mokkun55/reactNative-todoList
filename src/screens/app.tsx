@@ -1,25 +1,21 @@
-import { type FC } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { registerRootComponent } from "expo";
-import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-const App: FC = () => {
+import { HomeScreen } from "@/screens/Home";
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up app.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Todo List">
+        <Stack.Screen name="Todo List" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 // eslint-disable-next-line no-unused-expressions
 registerRootComponent(App);
