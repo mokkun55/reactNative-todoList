@@ -2,7 +2,6 @@ import { useEffect, useState, type ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import dayjs from "dayjs";
-import * as ContextMenu from "zeego/context-menu";
 
 import { type TodoType } from "@/types/todo-type";
 import { useAsyncStorage } from "../hooks/use-async-storage";
