@@ -1,32 +1,57 @@
 import { type ReactNode } from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 
+import { BaseButton } from "@/components/buttons/base-button";
+
 type Props = {
   isVisible: boolean;
 };
 
 export const TodoSettingModal = ({ isVisible }: Props): ReactNode => {
+  const editItem = () => {
+    //
+  };
+  const deleteItem = () => {
+    //
+  };
+
   return (
-    <View style={styles.container}>
-      <Modal visible={isVisible} animationType="slide" transparent={true}>
-        <Text>Setting</Text>
-        <Text>Setting</Text>
-        <Text>Setting</Text>
-        <Text>Setting</Text>
-      </Modal>
-    </View>
+    <Modal visible={isVisible} animationType="slide" transparent={true}>
+      <View style={styles.container}>
+        <View style={styles.modal}>
+          <Text style={styles.settingTitle}>設定</Text>
+
+          <BaseButton style={styles.settingItem} onPress={editItem}>
+            編集
+          </BaseButton>
+          <BaseButton style={styles.settingItem} onPress={deleteItem}>
+            削除
+          </BaseButton>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#0f0",
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    top: 500,
-    left: 500,
-    width: 500,
-    height: 500,
+  },
+  modal: {
+    width: "80%",
+    backgroundColor: "white",
+    borderRadius: 4,
+    padding: 10,
+  },
+  settingTitle: {
+    fontWeight: "bold",
+  },
+  settingItem: {
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
   },
 });
