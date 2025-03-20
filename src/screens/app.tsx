@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 
 import "dayjs/locale/ja";
 
+import { TodoProvider } from "@/context/todo-context";
 import { HomeScreen } from "@/screens/Home";
 
 dayjs.locale("ja");
@@ -13,11 +14,13 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Todo List">
-        <Stack.Screen name="Todo List" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <TodoProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Todo List">
+          <Stack.Screen name="Todo List" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </TodoProvider>
   );
 };
 

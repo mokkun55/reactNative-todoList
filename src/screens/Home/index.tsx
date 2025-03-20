@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-import { useAsyncStorage } from "@/screens/Home/hooks/use-async-storage";
-import { type TodoType } from "@/types/todo-type";
+import { useTodo } from "@/context/todo-context";
 import { AddButton } from "./components/add-button";
 import { InputModal } from "./components/input-modal";
 import { TodoItem } from "./components/todo-item";
 
 export const HomeScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [todos, setTodos] = useState<TodoType[]>([]);
-  const { getTodos } = useAsyncStorage();
-
-  const fetchTodos = async () => {
-    const todos = await getTodos();
-    setTodos(todos);
-  };
-  // 初回読み込み
-  useEffect(() => {
-    void fetchTodos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { todos, setTodos } = useTodo();
 
   return (
     <View style={styles.container}>
@@ -53,8 +41,6 @@ export const HomeScreen = () => {
       {/* 入力欄モーダル*/}
       {isModalVisible && (
         <InputModal
-          todos={todos}
-          setTodos={setTodos}
           isVisible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
         />

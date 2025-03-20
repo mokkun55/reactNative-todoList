@@ -11,25 +11,18 @@ import Icon from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-import { useAsyncStorage } from "@/screens/Home/hooks/use-async-storage";
-import { type TodoType } from "@/types/todo-type";
+import { useTodo } from "@/context/todo-context";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
-  todos: TodoType[];
-  setTodos: (todo: TodoType[]) => void;
 };
 
-export const InputModal = ({
-  isVisible,
-  onClose,
-  todos,
-  setTodos,
-}: Props): ReactNode => {
+export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
   const [text, onChangeText] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
-  const { addTodo } = useAsyncStorage();
+  // const { addTodo } = useAsyncStorage();
+  const { todos, addTodo } = useTodo();
 
   // 年月日変更時に呼ばれる
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,10 +41,10 @@ export const InputModal = ({
   const onSubmit = async () => {
     if (!text) return;
 
-    setTodos([
-      ...todos,
-      { id: String(todos.length + 1), title: text, date, done: false },
-    ]);
+    // setTodos([
+    //   ...todos,
+    //   { id: String(todos.length + 1), title: text, date, done: false },
+    // ]);
 
     try {
       void addTodo({
