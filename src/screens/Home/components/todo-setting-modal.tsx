@@ -1,13 +1,22 @@
 import { type ReactNode } from "react";
-import { Modal, StyleSheet, Text, View } from "react-native";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 import { BaseButton } from "@/components/buttons/base-button";
+import type { TodoType } from "@/types/todo-type";
 
 type Props = {
+  todoItem: TodoType;
   isVisible: boolean;
+  onClose: () => void;
 };
 
-export const TodoSettingModal = ({ isVisible }: Props): ReactNode => {
+export const TodoSettingModal = ({ isVisible, onClose }: Props): ReactNode => {
   const editItem = () => {
     //
   };
@@ -16,19 +25,21 @@ export const TodoSettingModal = ({ isVisible }: Props): ReactNode => {
   };
 
   return (
-    <Modal visible={isVisible} animationType="slide" transparent={true}>
-      <View style={styles.container}>
-        <View style={styles.modal}>
-          <Text style={styles.settingTitle}>設定</Text>
+    <Modal visible={isVisible} animationType="fade" transparent={true}>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.container}>
+          <View style={styles.modal}>
+            <Text style={styles.settingTitle}>設定</Text>
 
-          <BaseButton style={styles.settingItem} onPress={editItem}>
-            編集
-          </BaseButton>
-          <BaseButton style={styles.settingItem} onPress={deleteItem}>
-            削除
-          </BaseButton>
+            <BaseButton style={styles.settingItem} onPress={editItem}>
+              編集
+            </BaseButton>
+            <BaseButton style={styles.settingItem} onPress={deleteItem}>
+              削除
+            </BaseButton>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -36,7 +47,7 @@ export const TodoSettingModal = ({ isVisible }: Props): ReactNode => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     justifyContent: "center",
     alignItems: "center",
   },

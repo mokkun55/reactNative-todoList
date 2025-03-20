@@ -22,8 +22,6 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
   const todoDate = dayjs(todoItem.date);
 
   const handleLongPress = () => {
-    console.log("long press");
-
     setIsSetting(true);
   };
 
@@ -73,7 +71,11 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
         </View>
       </View>
 
-      <TodoSettingModal isVisible={isSetting} />
+      <TodoSettingModal
+        todoItem={todoItem}
+        isVisible={isSetting}
+        onClose={() => setIsSetting(false)}
+      />
     </>
   );
 };
