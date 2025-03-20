@@ -8,18 +8,26 @@ import {
 } from "react-native";
 
 import { BaseButton } from "@/components/buttons/base-button";
+import { useTodo } from "@/context/todo-context";
 
 type Props = {
+  id: string;
   isVisible: boolean;
   onClose: () => void;
 };
 
-export const TodoSettingModal = ({ isVisible, onClose }: Props): ReactNode => {
+export const TodoSettingModal = ({
+  isVisible,
+  onClose,
+  id,
+}: Props): ReactNode => {
+  const { deleteTodo } = useTodo();
+
   const editItem = () => {
     //
   };
   const deleteItem = () => {
-    //
+    deleteTodo(id);
   };
 
   return (

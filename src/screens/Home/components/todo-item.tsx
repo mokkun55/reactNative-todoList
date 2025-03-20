@@ -72,7 +72,7 @@ export const TodoItem = ({ todoItem }: Props): ReactNode => {
       </View>
 
       <TodoSettingModal
-        todoItem={todoItem}
+        id={todoItem.id}
         isVisible={isSetting}
         onClose={() => setIsSetting(false)}
       />
