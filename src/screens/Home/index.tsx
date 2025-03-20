@@ -8,7 +8,7 @@ import { TodoItem } from "./components/todo-item";
 
 export const HomeScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const { todos, setTodos } = useTodo();
+  const { todos } = useTodo();
 
   return (
     <View style={styles.container}>
