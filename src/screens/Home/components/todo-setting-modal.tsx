@@ -8,10 +8,8 @@ import {
 } from "react-native";
 
 import { BaseButton } from "@/components/buttons/base-button";
-import type { TodoType } from "@/types/todo-type";
 
 type Props = {
-  todoItem: TodoType;
   isVisible: boolean;
   onClose: () => void;
 };

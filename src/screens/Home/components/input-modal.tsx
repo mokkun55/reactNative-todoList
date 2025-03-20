@@ -21,7 +21,6 @@ type Props = {
 export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
   const [text, onChangeText] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
-  // const { addTodo } = useAsyncStorage();
   const { todos, addTodo } = useTodo();
 
   // 年月日変更時に呼ばれる
