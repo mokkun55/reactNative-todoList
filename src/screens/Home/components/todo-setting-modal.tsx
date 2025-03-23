@@ -42,7 +42,8 @@ export const TodoSettingModal = ({
     updateTodo(id, {
       ...todoItem,
       title,
-      date,
+      date: new Date(date),
+      done: todoItem.done,
     });
     setIsEditModalVisible(false);
   };

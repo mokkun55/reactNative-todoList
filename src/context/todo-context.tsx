@@ -76,15 +76,19 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // TODOを更新
-  const updateTodo = (id: string, todo: TodoType) => {
-    const newTodos = todos.map((t) => {
-      if (t.id === id) {
-        return todo;
-      }
-      return t;
-    });
-    void saveTodos(newTodos);
-    setTodos(newTodos);
+  const updateTodo = async (id: string, todo: TodoType) => {
+    try {
+      const newTodos = todos.map((t) => {
+        if (t.id === id) {
+          return todo;
+        }
+        return t;
+      });
+      await saveTodos(newTodos);
+      setTodos(newTodos);
+    } catch (error) {
+      console.error("更新エラー:", error);
+    }
   };
 
   const deleteTodo = (id: string) => {
@@ -103,7 +107,9 @@ export const TodoProvider = ({ children }: { children: ReactNode }) => {
         toggleTodo: (id) => {
           void toggleTodo(id);
         },
-        updateTodo,
+        updateTodo: (id, todo) => {
+          void updateTodo(id, todo);
+        },
         deleteTodo,
         setTodos,
       }}
