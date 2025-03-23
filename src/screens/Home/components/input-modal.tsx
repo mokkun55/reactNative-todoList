@@ -9,41 +9,56 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  type DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 import { useTodo } from "@/context/todo-context";
 
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  initialTitle?: string;
+  initialDate?: Date;
+  onSubmit?: (title: string, date: Date) => void;
 };
 
-export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
-  const [text, onChangeText] = useState<string>("");
-  const [date, setDate] = useState<Date>(new Date());
+export const InputModal = ({
+  isVisible,
+  onClose,
+  initialTitle = "",
+  initialDate = new Date(),
+  onSubmit,
+}: Props): ReactNode => {
+  const [text, onChangeText] = useState<string>(initialTitle);
+  const [date, setDate] = useState<Date>(initialDate);
   const { todos, addTodo } = useTodo();
 
   // 年月日変更時に呼ばれる
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onDateChange = (event: any, selectedDate: Date | undefined) => {
+  const onDateChange = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
     const currentDate = selectedDate ?? date;
     setDate(currentDate);
   };
 
   // 時分変更時に呼ばれる
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onTimeChange = (event: any, selectedDate: Date | undefined) => {
+  const onTimeChange = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
     const currentDate = selectedDate ?? date;
     setDate(currentDate);
   };
 
-  const onSubmit = async () => {
+  const handleSubmit = async () => {
     if (!text) return;
 
-    // setTodos([
-    //   ...todos,
-    //   { id: String(todos.length + 1), title: text, date, done: false },
-    // ]);
+    if (onSubmit) {
+      onSubmit(text, date);
+      return;
+    }
 
     try {
       void addTodo({
@@ -75,7 +90,7 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
           placeholder="例: トマトを買う"
           placeholderTextColor="#555"
           autoFocus
-          onSubmitEditing={onSubmit}
+          onSubmitEditing={handleSubmit}
         />
         <View style={styles.buttonContainer}>
           <View style={styles.datePickerContainer}>
@@ -109,7 +124,7 @@ export const InputModal = ({ isVisible, onClose }: Props): ReactNode => {
               backgroundColor: "#DD4B3F",
               borderRadius: 50,
             }}
-            onPress={onSubmit}
+            onPress={handleSubmit}
           />
         </View>
       </KeyboardAvoidingView>
