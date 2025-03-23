@@ -1,10 +1,10 @@
-import { useEffect, useState, type ReactNode } from "react";
+import React, { useEffect, useState, type ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import dayjs from "dayjs";
 
 import { useTodo } from "@/context/todo-context";
-import { type TodoType } from "@/types/todo-type";
+import type { TodoType } from "@/types/todo-type";
 import { TodoSettingModal } from "./todo-setting-modal";
 
 type Props = {
